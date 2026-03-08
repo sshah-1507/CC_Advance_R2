@@ -1,0 +1,218 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Design Tokens ─────────────────────────────────────────────────── */
+:root {
+  --neon-cyan:    #00f5ff;
+  --neon-green:   #00ff88;
+  --neon-orange:  #ff6b00;
+  --neon-red:     #ff2d55;
+  --neon-yellow:  #ffd60a;
+  --void:         #04080f;
+  --panel:        #070c18;
+  --panel-light:  #0b1220;
+  --border:       rgba(0,245,255,0.10);
+}
+
+/* ─── Base ───────────────────────────────────────────────────────────── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--void);
+  font-family: 'Inter', 'Exo 2', system-ui, sans-serif;
+  overflow-x: hidden;
+  color: rgba(255,255,255,0.85);
+}
+
+/* Subtle ambient grid */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,245,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,245,255,0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Radial ambient glow behind everything */
+body::after {
+  content: '';
+  position: fixed;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 500px;
+  background: radial-gradient(ellipse at center, rgba(0,245,255,0.04) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 3px; height: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0,245,255,0.2); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,245,255,0.4); }
+
+/* ─── Typography ─────────────────────────────────────────────────────── */
+.font-display { font-family: 'Inter', system-ui, sans-serif; letter-spacing: 0.02em; }
+.font-mono    { font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace; }
+
+/* ─── Panels ─────────────────────────────────────────────────────────── */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  position: relative;
+  backdrop-filter: blur(2px);
+  transition: border-color 0.2s ease;
+}
+
+.panel:hover { border-color: rgba(0,245,255,0.16); }
+
+.panel-accent {
+  background: linear-gradient(135deg, var(--panel-light) 0%, var(--panel) 100%);
+  border: 1px solid rgba(0,245,255,0.15);
+  border-radius: 8px;
+}
+
+/* ─── Section Header ─────────────────────────────────────────────────── */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(0,245,255,0.08);
+  flex-shrink: 0;
+}
+
+.section-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--neon-cyan);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* ─── Leaflet Dark Theme ─────────────────────────────────────────────── */
+.leaflet-container {
+  background: #04080f !important;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+.leaflet-tile { filter: invert(1) hue-rotate(190deg) brightness(0.65) saturate(0.7); }
+.leaflet-control-attribution { display: none; }
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+  background: var(--panel) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--neon-cyan) !important;
+}
+.leaflet-bar { border: 1px solid var(--border) !important; border-radius: 6px !important; }
+
+/* ─── Neon Text ──────────────────────────────────────────────────────── */
+.neon-text-cyan   { color: var(--neon-cyan);   text-shadow: 0 0 12px rgba(0,245,255,0.7), 0 0 32px rgba(0,245,255,0.3); }
+.neon-text-green  { color: var(--neon-green);  text-shadow: 0 0 12px rgba(0,255,136,0.7), 0 0 32px rgba(0,255,136,0.3); }
+.neon-text-red    { color: var(--neon-red);    text-shadow: 0 0 12px rgba(255,45,85,0.7); }
+.neon-text-orange { color: var(--neon-orange); text-shadow: 0 0 12px rgba(255,107,0,0.7); }
+
+/* ─── Status Badges ──────────────────────────────────────────────────── */
+.badge        { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; }
+.badge-ok     { background: rgba(0,255,136,0.12); color: #00ff88; border: 1px solid rgba(0,255,136,0.25); }
+.badge-warn   { background: rgba(255,214,10,0.12); color: #ffd60a; border: 1px solid rgba(255,214,10,0.25); }
+.badge-critical { background: rgba(255,45,85,0.12); color: #ff2d55; border: 1px solid rgba(255,45,85,0.25); }
+.badge-info   { background: rgba(0,245,255,0.12); color: #00f5ff; border: 1px solid rgba(0,245,255,0.25); }
+.badge-orange { background: rgba(255,107,0,0.12); color: #ff6b00; border: 1px solid rgba(255,107,0,0.25); }
+
+/* ─── Severity Indicator ─────────────────────────────────────────────── */
+.severity-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ─── Animations ─────────────────────────────────────────────────────── */
+@keyframes agentPulse {
+  0%, 100% { opacity: 1;   box-shadow: 0 0 6px rgba(0,255,136,0.3); }
+  50%       { opacity: 0.8; box-shadow: 0 0 20px rgba(0,255,136,0.7), 0 0 40px rgba(0,255,136,0.25); }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(8px); opacity: 0; }
+  to   { transform: translateY(0);   opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scanPulse {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+.chat-message { animation: slideUp 0.25s ease-out; }
+.fade-in      { animation: fadeIn  0.3s ease-out;  }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.animate-spin { animation: spin 1s linear infinite; }
+
+/* ─── Input / Select ─────────────────────────────────────────────────── */
+select, input[type="text"], input[type="email"] {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(0,245,255,0.15);
+  border-radius: 6px;
+  color: rgba(255,255,255,0.9);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+select:focus, input:focus {
+  border-color: rgba(0,245,255,0.45);
+  box-shadow: 0 0 0 2px rgba(0,245,255,0.08);
+}
+select option { background: #0b1220; color: #fff; }
+
+/* ─── Range Slider ───────────────────────────────────────────────────── */
+input[type="range"] {
+  -webkit-appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.08);
+  outline: none;
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 8px rgba(0,245,255,0.6);
+  cursor: pointer;
+}
+
+/* ─── Utility ────────────────────────────────────────────────────────── */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Divider */
+.divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(0,245,255,0.12), transparent); }
